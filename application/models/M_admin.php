@@ -40,4 +40,12 @@ class M_admin extends CI_Model
 
         return $result->row_array();
     }
+
+    public function cekLoginAdmin($data)
+    {
+        $this->db->where($data);
+        $result = $this->db->get("admin");
+
+        return $result->row_array();
+    }
 }

@@ -24,6 +24,7 @@ class Admin extends CI_Controller
         echo json_encode($data_json);
     }
 
+    // Create
     public function admin_post()
     {
         $validation_message = [];
@@ -142,5 +143,29 @@ class Admin extends CI_Controller
             "message" => "Delete Success",
         );
         echo $result;
+    }
+
+    public function login_post()
+    {
+        $data = array(
+            "email" => $this->input->get("email"),
+            "password" => md5($this->input->get("password")),
+        );
+
+        $result = $this->M_admin->cekLoginAdmin($data);
+
+        if (empty($result)) {
+
+            $data_json = array(
+                'success' => false,
+                "message" => "Email & Password Invalid",
+                "error_code" => 1308
+            );
+            echo json_encode($data_json);
+            $this->output->_display();
+            exit();
+        } else {
+            echo "Berhasil";
+        }
     }
 }
