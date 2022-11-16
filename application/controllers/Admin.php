@@ -74,54 +74,54 @@ class Admin extends CI_Controller
     }
 
     // Update
-    // public function admin_put()
-    // {
-    //     $validation_message = [];
+    public function admin_put()
+    {
+        $validation_message = [];
 
-    //     if ($this->put("email") == "") {
-    //         array_push($validation_message, "Email cannot be empty");
-    //     }
+        if ($this->input->get("email") == "") {
+            array_push($validation_message, "Email cannot be empty");
+        }
 
-    //     if ($this->put("email") != "" && !filter_var($this->put("email"), FILTER_VALIDATE_EMAIL)) {
-    //         array_push($validation_message, "Email not valid");
-    //     }
+        if ($this->input->get("email") != "" && !filter_var($this->input->get("email"), FILTER_VALIDATE_EMAIL)) {
+            array_push($validation_message, "Email not valid");
+        }
 
-    //     if ($this->put("password") == "") {
-    //         array_push($validation_message, "Password cannot be empty");
-    //     }
+        if ($this->input->get("password") == "") {
+            array_push($validation_message, "Password cannot be empty");
+        }
 
-    //     if ($this->put("nama") == "") {
-    //         array_push($validation_message, "Nama cannot be empty");
-    //     }
+        if ($this->input->get("nama") == "") {
+            array_push($validation_message, "Nama cannot be empty");
+        }
 
-    //     if (count($validation_message) > 0) {
-    //         $data_json = array(
-    //             'success' => false,
-    //             "message" => "Insert Data Failed",
-    //             "data" => $validation_message
-    //         );
-    //         echo json_encode($data_json);
-    //         $this->output->_display();
-    //         exit();
-    //     }
-    //     $data = array(
-    //         "email" => $this->put("email"),
-    //         "password" => md5($this->put("password")),
-    //         "nama" => $this->put("nama"),
-    //     );
+        if (count($validation_message) > 0) {
+            $data_json = array(
+                'success' => false,
+                "message" => "Insert Data Failed",
+                "data" => $validation_message
+            );
+            echo json_encode($data_json);
+            $this->output->_display();
+            exit();
+        }
+        $data = array(
+            "email" => $this->input->get("email"),
+            "password" => md5($this->input->get("password")),
+            "nama" => $this->input->get("nama"),
+        );
 
-    //     $id = $this->put("id");
+        $id = $this->input->get("id");
 
-    //     $result = $this->M_admin->updateAdmin($data, $id);
-    //     $data_json = array(
-    //         'success' => true,
-    //         "message" => "Update Data Success",
-    //         "data" => array(
-    //             "admin" => $result
-    //         )
-    //     );
-    //     echo json_encode($data_json);
-    // }
+        $result = $this->M_admin->updateAdmin($data, $id);
+        $data_json = array(
+            'success' => true,
+            "message" => "Update Data Success",
+            "data" => array(
+                "admin" => $result
+            )
+        );
+        echo json_encode($data_json);
+    }
 
     // Delete
     public function admin_delete($id)
