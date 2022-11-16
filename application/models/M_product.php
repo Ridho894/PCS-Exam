@@ -14,4 +14,30 @@ class M_product extends CI_Model
         $query = $this->db->get('produk');
         return $query->result_array();
     }
+
+    public function insertProduct($data)
+    {
+        $this->db->insert('produk', $data);
+        $insert_id = $this->db->insert_id();
+        $result = $this->db->get_where('produk', array('id' => $insert_id));
+
+        return $result->row_array();
+    }
+
+    public function updateProduct($data, $id)
+    {
+        $this->db->where('id', $id);
+        $this->db->update('produk', $data);
+
+        $result = $this->db->get_where('produk', array('id' => $id));
+
+        return $result->row_array();
+    }
+
+    public function deleteProduct($id)
+    {
+        $result = $this->db->get_where('product', array('id' => $id));
+
+        return $result->row_array();
+    }
 }
