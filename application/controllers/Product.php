@@ -4,9 +4,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Product extends CI_Controller
 {
+    function __construct()
+    {
+        parent::__construct();
+        $this->load->database();
+        $this->load->model('M_product');
+    }
+
     function index()
     {
-        $this->load->model('M_product');
         $product = $this->M_product->getProduct();
         $data_json = array(
             'success' => true,
