@@ -126,11 +126,21 @@ class Admin extends CI_Controller
     // Delete
     public function admin_delete($id)
     {
+        $result = $this->M_admin->deleteAdmin($id);
+        if (empty($result)) {
+            $data_json = array(
+                'success' => false,
+                "message" => "Id is Invalid",
+            );
+            echo json_encode($data_json);
+            $this->output->_display();
+            exit();
+        }
         $this->db->delete("admin", array("id" => $id));
         $data_json = array(
             'success' => true,
             "message" => "Delete Success",
         );
-        echo json_encode($data_json);
+        echo $result;
     }
 }
