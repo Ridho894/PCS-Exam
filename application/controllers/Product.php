@@ -133,11 +133,21 @@ class Product extends CI_Controller
     // Delete
     public function product_delete($id)
     {
-        $this->db->delete("produk", array("id" => $id));
-        $data_json = array(
-            'success' => true,
-            "message" => "Delete Success",
-        );
-        echo json_encode($data_json);
+        if (!$this->M_product->cekProductExist($this->input->get("id"))) {
+
+            $data_json = array(
+                'success' => false,
+                "message" => "Product not found",
+            );
+            echo json_encode($data_json);
+        } else {
+
+            $this->db->delete("produk", array("id" => $id));
+            $data_json = array(
+                'success' => true,
+                "message" => "Delete Success",
+            );
+            echo json_encode($data_json);
+        }
     }
 }

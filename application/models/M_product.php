@@ -40,4 +40,19 @@ class M_product extends CI_Model
 
         return $result->row_array();
     }
+
+    public function cekProductExist($id)
+    {
+        $data = array(
+            "id" => $id
+        );
+        $this->db->where($data);
+        $result = $this->db->get('produk');
+
+        if (empty($result->row_array())) {
+            return false;
+        };
+
+        return true;
+    }
 }
