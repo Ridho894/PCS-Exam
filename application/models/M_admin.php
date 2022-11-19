@@ -48,4 +48,19 @@ class M_admin extends CI_Model
 
         return $result->row_array();
     }
+
+    public function cekAdminExist($id)
+    {
+        $data = array(
+            "id" => $id
+        );
+        $this->db->where($data);
+        $result = $this->db->get('admin');
+
+        if (empty($result->row_array())) {
+            return false;
+        };
+
+        return true;
+    }
 }
