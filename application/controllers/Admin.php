@@ -1,11 +1,21 @@
 <?php
 
+defined('BASEPATH') or exit('No direct script access allowed');
+
+require APPPATH . '/libraries/REST_Controller.php';
+
 use Restserver\Libraries\REST_Controller;
 
-defined('BASEPATH') or exit('No direct script access allowed');
+require APPPATH . '/libraries/Firebase/JWT/JWT.php';
+
+use \Firebase\JWT\JWT;
+
+
 
 class Admin extends CI_Controller
 {
+    private $secret_key = 'z9lwock9tjd7fa5i9Ov5bMRyWVNL9Dui';
+
     function __construct()
     {
         parent::__construct();
@@ -165,7 +175,21 @@ class Admin extends CI_Controller
             $this->output->_display();
             exit();
         } else {
-            echo "Berhasil";
+            $date = new DateTime();
+            $payload["id"] = $result["id"];
+            $payload["email"] = $result["email"];
+            $payload["iat"] = $date->getTimestamp();
+            $payload["exp"] = $date->getTimestamp() * 3600;
+
+            $data_json = array(
+                "success" => true,
+                "message" => "Authentication Success",
+                "data" => array(
+                    "admin" => $result,
+                    "token" => JWT::encode($payload, $this->secret_key)
+                )
+            );
+            echo json_encode($data_json);
         }
     }
 }
