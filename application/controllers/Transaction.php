@@ -13,6 +13,7 @@ class Transaction extends CI_Controller
         $this->load->model('M_transaction');
     }
 
+    // Get All Data
     public function index()
     {
         $transaksi = $this->M_transaction->getTransaction();
@@ -24,6 +25,7 @@ class Transaction extends CI_Controller
         echo json_encode($data_json);
     }
 
+    // Create
     public function transaction_post()
     {
         $validation_message = [];
@@ -64,6 +66,39 @@ class Transaction extends CI_Controller
             "data" => array(
                 "transaction" => $result
             )
+        );
+
+        echo json_encode($data_json);
+    }
+
+    // Delete
+    public function transaction_delete()
+    {
+        $validation_message = [];
+
+        if ($this->input->get("id") == "") {
+            array_push($validation_message, "ID Product cannot be empty");
+        }
+
+        if ($this->input->get("id") != "" && !$this->M_transaction->cekTransactionExist($this->input->get("id"))) {
+            array_push($validation_message, "Transaction not found");
+        }
+
+        if (count($validation_message) > 0) {
+            $data_json = array(
+                'success' => false,
+                "message" => $validation_message[0],
+            );
+
+            echo json_encode($data_json);
+            $this->output->_display();
+            exit();
+        }
+
+        $this->db->delete("transaksi", array("id" => $this->input->get("id")));
+        $data_json = array(
+            'success' => true,
+            "message" => "Delete Transaction Success",
         );
 
         echo json_encode($data_json);

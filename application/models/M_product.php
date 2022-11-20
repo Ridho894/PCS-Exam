@@ -36,7 +36,7 @@ class M_product extends CI_Model
 
     public function deleteProduct($id)
     {
-        $result = $this->db->get_where('product', array('id' => $id));
+        $result = $this->db->get_where('produk', array('id' => $id));
 
         return $result->row_array();
     }

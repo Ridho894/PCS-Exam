@@ -24,6 +24,13 @@ class M_Transaction extends CI_Model
         return $result->row_array();
     }
 
+    public function deleteTransaction($id)
+    {
+        $result = $this->db->get_where('transaksi', array('id' => $id));
+
+        return $result->row_array();
+    }
+
     public function cekTransactionExist($id)
     {
         $data = array(

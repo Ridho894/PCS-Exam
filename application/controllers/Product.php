@@ -131,23 +131,35 @@ class Product extends CI_Controller
     }
 
     // Delete
-    public function product_delete($id)
+    public function product_delete()
     {
-        if (!$this->M_product->cekProductExist($this->input->get("id"))) {
+        $validation_message = [];
 
+        if ($this->input->get("id") == "") {
+            array_push($validation_message, "ID Product cannot be empty");
+        }
+
+        if ($this->input->get("id") != "" && !$this->M_product->cekProductExist($this->input->get("id"))) {
+            array_push($validation_message, "Product not found");
+        }
+
+        if (count($validation_message) > 0) {
             $data_json = array(
                 'success' => false,
-                "message" => "Product not found",
+                "message" => $validation_message[0],
             );
-            echo json_encode($data_json);
-        } else {
 
-            $this->db->delete("produk", array("id" => $id));
-            $data_json = array(
-                'success' => true,
-                "message" => "Delete Success",
-            );
             echo json_encode($data_json);
+            $this->output->_display();
+            exit();
         }
+
+        $this->db->delete("produk", array("id" => $this->input->get("id")));
+        $data_json = array(
+            'success' => true,
+            "message" => "Delete Data Success",
+        );
+
+        echo json_encode($data_json);
     }
 }
