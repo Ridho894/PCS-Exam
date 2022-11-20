@@ -32,6 +32,10 @@ class Transaction extends CI_Controller
             array_push($validation_message, "Admin Id cannot be empty");
         }
 
+        if ($this->input->get("admin_id") != "" && !$this->M_transaction->cekTransactionExist($this->input->get("admin_id"))) {
+            array_push($validation_message, "Admin Id not found");
+        }
+
         if ($this->input->get("total") == "") {
             array_push($validation_message, "Total cannot be empty");
         }
@@ -50,6 +54,7 @@ class Transaction extends CI_Controller
         $data = array(
             "admin_id" => $this->input->get("admin_id"),
             "total" => $this->input->get("total"),
+            'tanggal' => date("Y-m-d H:i:s"),
         );
 
         $result = $this->M_transaction->insertTransaction($data);

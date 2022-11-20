@@ -23,4 +23,19 @@ class M_Transaction extends CI_Model
 
         return $result->row_array();
     }
+
+    public function cekTransactionExist($id)
+    {
+        $data = array(
+            "id" => $id
+        );
+        $this->db->where($data);
+        $result = $this->db->get('transaksi');
+
+        if (empty($result->row_array())) {
+            return false;
+        };
+
+        return true;
+    }
 }
