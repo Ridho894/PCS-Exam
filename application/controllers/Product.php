@@ -1,11 +1,15 @@
 <?php
 
-use Restserver\Libraries\REST_Controller;
 
 defined('BASEPATH') or exit('No direct script access allowed');
+require APPPATH . '/libraries/Firebase/JWT/JWT.php';
+
+use \Firebase\JWT\JWT;
+use Restserver\Libraries\REST_Controller;
 
 class Product extends CI_Controller
 {
+    private $secret_key = 'z9lwock9tjd7fa5i9Ov5bMRyWVNL9Dui';
     function __construct()
     {
         parent::__construct();
@@ -29,6 +33,7 @@ class Product extends CI_Controller
     // Create
     public function product_post()
     {
+        $this->cekToken();
         $validation_message = [];
 
         if ($this->input->get("admin_id") == "") {
@@ -92,6 +97,7 @@ class Product extends CI_Controller
     // Update
     public function product_put()
     {
+        $this->cekToken();
         $validation_message = [];
 
         if ($this->input->get("admin_id") == "") {
@@ -160,6 +166,7 @@ class Product extends CI_Controller
     // Delete
     public function product_delete()
     {
+        $this->cekToken();
         $validation_message = [];
 
         if ($this->input->get("id") == "") {
@@ -188,5 +195,25 @@ class Product extends CI_Controller
         );
 
         echo json_encode($data_json);
+    }
+
+    public function cekToken()
+    {
+        try {
+            $token = $this->input->get_request_header("Authorization");
+            if (!empty($token)) {
+                $token = explode(' ', $token)[1];
+            }
+            $token_decode = JWT::decode($token, $this->secret_key, array("HS256"));
+        } catch (Exception $e) {
+            $data_json = array(
+                'success' => false,
+                "message" => "Invalid Token",
+                "error_code" => 1204,
+            );
+            echo json_encode($data_json);
+            $this->output->_display();
+            exit();
+        }
     }
 }

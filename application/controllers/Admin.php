@@ -38,6 +38,7 @@ class Admin extends CI_Controller
     // Create
     public function admin_post()
     {
+        $this->cekToken();
         $validation_message = [];
 
         if ($this->input->get("email") == "") {
@@ -88,6 +89,7 @@ class Admin extends CI_Controller
     // Update
     public function admin_put()
     {
+        $this->cekToken();
         $validation_message = [];
 
         if ($this->input->get("email") == "") {
@@ -138,6 +140,7 @@ class Admin extends CI_Controller
     // Delete
     public function admin_delete($id)
     {
+        $this->cekToken();
         $result = $this->M_admin->deleteAdmin($id);
         if (empty($result)) {
             $data_json = array(

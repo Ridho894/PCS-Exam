@@ -1,11 +1,16 @@
 <?php
 
-use Restserver\Libraries\REST_Controller;
 
 defined('BASEPATH') or exit('No direct script access allowed');
+require APPPATH . '/libraries/Firebase/JWT/JWT.php';
+
+use \Firebase\JWT\JWT;
+use Restserver\Libraries\REST_Controller;
 
 class Transaction extends CI_Controller
 {
+    private $secret_key = 'z9lwock9tjd7fa5i9Ov5bMRyWVNL9Dui';
+
     function __construct()
     {
         parent::__construct();
@@ -28,6 +33,7 @@ class Transaction extends CI_Controller
     // Get data by month
     public function transaction_this_month()
     {
+        $this->cekToken();
         $transaksi = $this->M_transaction->getItemTransactionThisMonth();
         $data_json = array(
             'success' => true,
@@ -40,6 +46,7 @@ class Transaction extends CI_Controller
     // Create
     public function transaction_post()
     {
+        $this->cekToken();
         $validation_message = [];
 
         if ($this->input->get("admin_id") == "") {
@@ -86,6 +93,7 @@ class Transaction extends CI_Controller
     // Update
     public function transaction_put()
     {
+        $this->cekToken();
         $validation_message = [];
 
         if ($this->input->get("admin_id") == "") {
@@ -135,6 +143,7 @@ class Transaction extends CI_Controller
     // Delete
     public function transaction_delete()
     {
+        $this->cekToken();
         $validation_message = [];
 
         if ($this->input->get("id") == "") {
@@ -163,5 +172,25 @@ class Transaction extends CI_Controller
         );
 
         echo json_encode($data_json);
+    }
+
+    public function cekToken()
+    {
+        try {
+            $token = $this->input->get_request_header("Authorization");
+            if (!empty($token)) {
+                $token = explode(' ', $token)[1];
+            }
+            $token_decode = JWT::decode($token, $this->secret_key, array("HS256"));
+        } catch (Exception $e) {
+            $data_json = array(
+                'success' => false,
+                "message" => "Invalid Token",
+                "error_code" => 1204,
+            );
+            echo json_encode($data_json);
+            $this->output->_display();
+            exit();
+        }
     }
 }
