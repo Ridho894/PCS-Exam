@@ -92,8 +92,13 @@ class Product extends CI_Controller
             array_push($validation_message, "Admin Id not found");
         }
 
+
         if ($this->input->get("nama") == "") {
             array_push($validation_message, "Nama cannot be empty");
+        }
+
+        if ($this->input->get("id") != "" && !$this->M_product->cekProductExist($this->input->get("id"))) {
+            array_push($validation_message, "Product not found");
         }
 
         if ($this->input->get("harga") == "") {
