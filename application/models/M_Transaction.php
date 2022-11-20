@@ -31,10 +31,35 @@ class M_Transaction extends CI_Model
         return $result->row_array();
     }
 
+    public function updateTransaction($data, $id)
+    {
+        $this->db->where('id', $id);
+        $this->db->update('transaksi', $data);
+
+        $result = $this->db->get_where('transaksi', array('id' => $id));
+
+        return $result->row_array();
+    }
+
     public function cekTransactionExist($id)
     {
         $data = array(
             "id" => $id
+        );
+        $this->db->where($data);
+        $result = $this->db->get('transaksi');
+
+        if (empty($result->row_array())) {
+            return false;
+        };
+
+        return true;
+    }
+
+    public function cekAdminIdTransactionExist($admin_id)
+    {
+        $data = array(
+            "admin_id" => $admin_id
         );
         $this->db->where($data);
         $result = $this->db->get('transaksi');

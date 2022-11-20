@@ -71,6 +71,55 @@ class Transaction extends CI_Controller
         echo json_encode($data_json);
     }
 
+    // Update
+    public function transaction_put()
+    {
+        $validation_message = [];
+
+        if ($this->input->get("admin_id") == "") {
+            array_push($validation_message, "Admin Id cannot be empty");
+        }
+
+        if ($this->input->get("admin_id") != "" && !$this->M_transaction->cekAdminIdTransactionExist($this->input->get("admin_id"))) {
+            array_push($validation_message, "Admin Id not found");
+        }
+
+        if ($this->input->get("total") == "") {
+            array_push($validation_message, "Total cannot be empty");
+        }
+
+        if ($this->input->get("id") == "") {
+            array_push($validation_message, "Id cannot be empty");
+        }
+
+        if (count($validation_message) > 0) {
+            $data_json = array(
+                'success' => false,
+                "message" => "Insert Data Failed",
+                "data" => $validation_message
+            );
+            echo json_encode($data_json);
+            $this->output->_display();
+            exit();
+        }
+        $data = array(
+            "admin_id" => $this->input->get("admin_id"),
+            "total" => $this->input->get("total"),
+        );
+
+        $id = $this->input->get("id");
+
+        $result = $this->M_transaction->updateTransaction($data, $id);
+        $data_json = array(
+            'success' => true,
+            "message" => "Update Data Success",
+            "data" => array(
+                "transaction" => $result
+            )
+        );
+        echo json_encode($data_json);
+    }
+
     // Delete
     public function transaction_delete()
     {

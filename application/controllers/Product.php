@@ -88,6 +88,10 @@ class Product extends CI_Controller
             array_push($validation_message, "Admin Id cannot be empty");
         }
 
+        if ($this->input->get("admin_id") != "" && !$this->M_admin->cekAdminExist($this->input->get("admin_id"))) {
+            array_push($validation_message, "Admin Id not found");
+        }
+
         if ($this->input->get("nama") == "") {
             array_push($validation_message, "Nama cannot be empty");
         }
