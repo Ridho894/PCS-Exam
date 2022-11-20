@@ -25,6 +25,7 @@ class Admin extends CI_Controller
 
     public function index()
     {
+        $this->cekToken();
         $admin = $this->M_admin->getAdmin();
         $data_json = array(
             'success' => true,
@@ -190,6 +191,26 @@ class Admin extends CI_Controller
                 )
             );
             echo json_encode($data_json);
+        }
+    }
+
+    public function cekToken()
+    {
+        try {
+            $token = $this->input->get_request_header("Authorization");
+            if (!empty($token)) {
+                $token = explode(' ', $token)[1];
+            }
+            $token_decode = JWT::decode($token, $this->secret_key, array("HS256"));
+        } catch (Exception $e) {
+            $data_json = array(
+                'success' => false,
+                "message" => "Invalid Token",
+                "error_code" => 1204,
+            );
+            echo json_encode($data_json);
+            $this->output->_display();
+            exit();
         }
     }
 }
