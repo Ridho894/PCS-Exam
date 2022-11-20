@@ -25,6 +25,18 @@ class Transaction extends CI_Controller
         echo json_encode($data_json);
     }
 
+    // Get data by month
+    public function transaction_this_month()
+    {
+        $transaksi = $this->M_transaction->getItemTransactionThisMonth();
+        $data_json = array(
+            'success' => true,
+            "message" => "Data found",
+            "data" => $transaksi
+        );
+        echo json_encode($data_json);
+    }
+
     // Create
     public function transaction_post()
     {

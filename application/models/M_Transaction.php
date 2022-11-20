@@ -15,6 +15,16 @@ class M_Transaction extends CI_Model
         return $query->result_array();
     }
 
+    public function getItemTransactionThisMonth()
+    {
+        $this->db->select('transaksi.id,transaksi.total,transaksi.tanggal,admin.nama');
+        $this->db->from("transaksi");
+        $this->db->join('admin', 'admin.id = transaksi.admin_id');
+        $this->db->where('month(tanggal)', date('m'));
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
     public function insertTransaction($data)
     {
         $this->db->insert('transaksi', $data);

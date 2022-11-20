@@ -14,6 +14,7 @@ class Product extends CI_Controller
         $this->load->model('M_admin');
     }
 
+    // Get All
     public function index()
     {
         $product = $this->M_product->getProduct();
@@ -25,6 +26,7 @@ class Product extends CI_Controller
         echo json_encode($data_json);
     }
 
+    // Create
     public function product_post()
     {
         $validation_message = [];
@@ -45,8 +47,16 @@ class Product extends CI_Controller
             array_push($validation_message, "Harga cannot be empty");
         }
 
+        if ($this->input->get("harga") != "" && !is_numeric($this->input->get("harga"))) {
+            array_push($validation_message, "Price must be a number");
+        }
+
         if ($this->input->get("stok") == "") {
-            array_push($validation_message, "Stok cannot be empty");
+            array_push($validation_message, "Stock cannot be empty");
+        }
+
+        if ($this->input->get("stok") != "" && !is_numeric($this->input->get("stok"))) {
+            array_push($validation_message, "Stock must be a number");
         }
 
         if (count($validation_message) > 0) {
@@ -102,11 +112,19 @@ class Product extends CI_Controller
         }
 
         if ($this->input->get("harga") == "") {
-            array_push($validation_message, "Harga cannot be empty");
+            array_push($validation_message, "Price cannot be empty");
+        }
+
+        if ($this->input->get("harga") != "" && !is_numeric($this->input->get("harga"))) {
+            array_push($validation_message, "Price must be a number");
         }
 
         if ($this->input->get("stok") == "") {
-            array_push($validation_message, "Stok cannot be empty");
+            array_push($validation_message, "Stock cannot be empty");
+        }
+
+        if ($this->input->get("stok") != "" && !is_numeric($this->input->get("stok"))) {
+            array_push($validation_message, "Stock must be a number");
         }
 
         if (count($validation_message) > 0) {

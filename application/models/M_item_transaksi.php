@@ -15,6 +15,11 @@ class M_item_transaksi extends CI_Model
         return $query->result_array();
     }
 
+    public function getItemTransactionThisMonth()
+    {
+        $this->db->select('');
+    }
+
     public function insertItemTransaction($data)
     {
         $this->db->insert('item_transaksi', $data);
