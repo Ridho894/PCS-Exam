@@ -138,9 +138,16 @@ class Admin extends CI_Controller
     }
 
     // Delete
-    public function admin_delete($id)
+    public function admin_delete()
     {
         $this->cekToken();
+        $validation_message = [];
+
+        if ($this->input->get("id") == "") {
+            array_push($validation_message, "ID Admin cannot be empty");
+        }
+
+        $id = $this->input->get("id");
         $result = $this->M_admin->deleteAdmin($id);
         if (empty($result)) {
             $data_json = array(
@@ -156,7 +163,7 @@ class Admin extends CI_Controller
             'success' => true,
             "message" => "Delete Success",
         );
-        echo $result;
+        echo json_encode($data_json);
     }
 
     public function login_post()

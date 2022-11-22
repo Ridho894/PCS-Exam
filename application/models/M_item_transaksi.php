@@ -59,7 +59,7 @@ class M_item_transaksi extends CI_Model
     public function cekItemTransactionExist($id)
     {
         $data = array(
-            "id" => $id
+            "transaksi_id" => $id
         );
         $this->db->where($data);
         $result = $this->db->get('item_transaksi');
