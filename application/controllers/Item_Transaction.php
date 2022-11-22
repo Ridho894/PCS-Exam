@@ -17,6 +17,7 @@ class Item_Transaction extends CI_Controller
         $this->load->model('M_item_transaksi');
     }
 
+    // Get All
     public function index()
     {
         $product = $this->M_item_transaksi->getItemTransaction();
@@ -28,9 +29,23 @@ class Item_Transaction extends CI_Controller
         echo json_encode($data_json);
     }
 
+    // Get Data By Id Transaction
+    public function item_transaction_get_by_id()
+    {
+        $transaksi_id = $this->input->get("transaksi_id");
+        $product = $this->M_item_transaksi->getItemTransactionById($transaksi_id);
+        $data_json = array(
+            'success' => true,
+            "message" => "Data found",
+            "data" => $product
+        );
+        echo json_encode($data_json);
+    }
+
     // Create
     public function item_transaction_post()
     {
+        $this->cekToken();
         $validation_message = [];
 
         if ($this->input->get("transaksi_id") == "") {
@@ -107,6 +122,7 @@ class Item_Transaction extends CI_Controller
     // Update
     public function item_transaction_put()
     {
+        $this->cekToken();
         $validation_message = [];
 
         if ($this->input->get("transaksi_id") == "") {
@@ -208,6 +224,40 @@ class Item_Transaction extends CI_Controller
         }
 
         $this->db->delete("item_transaksi", array("id" => $this->input->get("id")));
+        $data_json = array(
+            'success' => true,
+            "message" => "Delete Data Success",
+        );
+
+        echo json_encode($data_json);
+    }
+
+    // Delete By Transaction ID
+    public function item_transaction_delete_by_id()
+    {
+        $this->cekToken();
+        $validation_message = [];
+
+        if ($this->input->get("transaksi_id") == "") {
+            array_push($validation_message, "Transaksi Id cannot be empty");
+        }
+
+        if ($this->input->get("transaksi_id") != "" && !$this->M_item_transaksi->cekItemTransactionExist($this->input->get("transaksi_id"))) {
+            array_push($validation_message, "Transaksi Id not found");
+        }
+
+        if (count($validation_message) > 0) {
+            $data_json = array(
+                'success' => false,
+                "message" => $validation_message[0],
+            );
+
+            echo json_encode($data_json);
+            $this->output->_display();
+            exit();
+        }
+
+        $this->db->delete("item_transaksi", array("transaksi_id" => $this->input->get("transaksi_id")));
         $data_json = array(
             'success' => true,
             "message" => "Delete Data Success",

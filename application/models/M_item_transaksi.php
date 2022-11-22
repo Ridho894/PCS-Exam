@@ -15,9 +15,12 @@ class M_item_transaksi extends CI_Model
         return $query->result_array();
     }
 
-    public function getItemTransactionThisMonth()
+    public function getItemTransactionById($transaksi_id)
     {
-        $this->db->select('');
+        $this->db->select('*');
+        $this->db->where('transaksi_id', $transaksi_id);
+        $query = $this->db->get('item_transaksi');
+        return $query->result();
     }
 
     public function insertItemTransaction($data)
@@ -42,6 +45,13 @@ class M_item_transaksi extends CI_Model
     public function deleteItemTransaction($id)
     {
         $result = $this->db->get_where('item_transaksi', array('id' => $id));
+
+        return $result->row_array();
+    }
+
+    public function deleteItemByTransactionId($transaksi_id)
+    {
+        $result = $this->db->get_where('item_transaksi', array('transaksi_id' => $transaksi_id));
 
         return $result->row_array();
     }
