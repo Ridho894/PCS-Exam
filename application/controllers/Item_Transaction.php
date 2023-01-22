@@ -32,7 +32,7 @@ class Item_Transaction extends CI_Controller
     // Get Data By Id Transaction
     public function item_transaction_get_by_id()
     {
-        $transaksi_id = $this->input->get("transaksi_id");
+        $transaksi_id = $this->input->post("transaksi_id");
         $product = $this->M_item_transaksi->getItemTransactionById($transaksi_id);
         $data_json = array(
             'success' => true,
@@ -48,43 +48,43 @@ class Item_Transaction extends CI_Controller
         $this->cekToken();
         $validation_message = [];
 
-        if ($this->input->get("transaksi_id") == "") {
+        if ($this->input->post("transaksi_id") == "") {
             array_push($validation_message, "Transaksi Id cannot be empty");
         }
 
-        if ($this->input->get("transaksi_id") != "" && !is_numeric($this->input->get("transaksi_id"))) {
+        if ($this->input->post("transaksi_id") != "" && !is_numeric($this->input->post("transaksi_id"))) {
             array_push($validation_message, "Transaksi Id must be a number");
         }
 
-        if ($this->input->get("produk_id") == "") {
+        if ($this->input->post("produk_id") == "") {
             array_push($validation_message, "Product Id cannot be empty");
         }
 
-        if ($this->input->get("produk_id") != "" && !is_numeric($this->input->get("produk_id"))) {
+        if ($this->input->post("produk_id") != "" && !is_numeric($this->input->post("produk_id"))) {
             array_push($validation_message, "Product Id must be a number");
         }
 
-        if ($this->input->get("qty") == "") {
+        if ($this->input->post("qty") == "") {
             array_push($validation_message, "Quantity cannot be empty");
         }
 
-        if ($this->input->get("qty") != "" && !is_numeric($this->input->get("qty"))) {
+        if ($this->input->post("qty") != "" && !is_numeric($this->input->post("qty"))) {
             array_push($validation_message, "Quantity must be a number");
         }
 
-        if ($this->input->get("harga_saat_transaksi") == "") {
+        if ($this->input->post("harga_saat_transaksi") == "") {
             array_push($validation_message, "Harga Saat Transaksi cannot be empty");
         }
 
-        if ($this->input->get("harga_saat_transaksi") != "" && !is_numeric($this->input->get("harga_saat_transaksi"))) {
+        if ($this->input->post("harga_saat_transaksi") != "" && !is_numeric($this->input->post("harga_saat_transaksi"))) {
             array_push($validation_message, "Harga Saat Transaksi must be a number");
         }
 
-        if ($this->input->get("sub_total") == "") {
+        if ($this->input->post("sub_total") == "") {
             array_push($validation_message, "Sub Total cannot be empty");
         }
 
-        if ($this->input->get("sub_total") != "" && !is_numeric($this->input->get("sub_total"))) {
+        if ($this->input->post("sub_total") != "" && !is_numeric($this->input->post("sub_total"))) {
             array_push($validation_message, "Sub Total must be a number");
         }
 
@@ -100,11 +100,11 @@ class Item_Transaction extends CI_Controller
             exit();
         }
         $data = array(
-            "transaksi_id" => $this->input->get("transaksi_id"),
-            "produk_id" => $this->input->get("produk_id"),
-            "qty" => $this->input->get("qty"),
-            "sub_total" => $this->input->get("sub_total"),
-            "harga_saat_transaksi" => $this->input->get("harga_saat_transaksi"),
+            "transaksi_id" => $this->input->post("transaksi_id"),
+            "produk_id" => $this->input->post("produk_id"),
+            "qty" => $this->input->post("qty"),
+            "sub_total" => $this->input->post("sub_total"),
+            "harga_saat_transaksi" => $this->input->post("harga_saat_transaksi"),
         );
 
         $result = $this->M_item_transaksi->insertItemTransaction($data);
@@ -125,43 +125,43 @@ class Item_Transaction extends CI_Controller
         $this->cekToken();
         $validation_message = [];
 
-        if ($this->input->get("transaksi_id") == "") {
+        if ($this->input->post("transaksi_id") == "") {
             array_push($validation_message, "Transaksi Id cannot be empty");
         }
 
-        if ($this->input->get("transaksi_id") != "" && !is_numeric($this->input->get("transaksi_id"))) {
+        if ($this->input->post("transaksi_id") != "" && !is_numeric($this->input->post("transaksi_id"))) {
             array_push($validation_message, "Transaksi Id must be a number");
         }
 
-        if ($this->input->get("produk_id") == "") {
+        if ($this->input->post("produk_id") == "") {
             array_push($validation_message, "Product Id cannot be empty");
         }
 
-        if ($this->input->get("produk_id") != "" && !is_numeric($this->input->get("produk_id"))) {
+        if ($this->input->post("produk_id") != "" && !is_numeric($this->input->post("produk_id"))) {
             array_push($validation_message, "Product Id must be a number");
         }
 
-        if ($this->input->get("qty") == "") {
+        if ($this->input->post("qty") == "") {
             array_push($validation_message, "Quantity cannot be empty");
         }
 
-        if ($this->input->get("qty") != "" && !is_numeric($this->input->get("qty"))) {
+        if ($this->input->post("qty") != "" && !is_numeric($this->input->post("qty"))) {
             array_push($validation_message, "Quantity must be a number");
         }
 
-        if ($this->input->get("harga_saat_transaksi") == "") {
+        if ($this->input->post("harga_saat_transaksi") == "") {
             array_push($validation_message, "Harga Saat Transaksi cannot be empty");
         }
 
-        if ($this->input->get("harga_saat_transaksi") != "" && !is_numeric($this->input->get("harga_saat_transaksi"))) {
+        if ($this->input->post("harga_saat_transaksi") != "" && !is_numeric($this->input->post("harga_saat_transaksi"))) {
             array_push($validation_message, "Harga Saat Transaksi must be a number");
         }
 
-        if ($this->input->get("sub_total") == "") {
+        if ($this->input->post("sub_total") == "") {
             array_push($validation_message, "Sub Total cannot be empty");
         }
 
-        if ($this->input->get("sub_total") != "" && !is_numeric($this->input->get("sub_total"))) {
+        if ($this->input->post("sub_total") != "" && !is_numeric($this->input->post("sub_total"))) {
             array_push($validation_message, "Sub Total must be a number");
         }
 
@@ -177,14 +177,14 @@ class Item_Transaction extends CI_Controller
             exit();
         }
         $data = array(
-            "transaksi_id" => $this->input->get("transaksi_id"),
-            "produk_id" => $this->input->get("produk_id"),
-            "qty" => $this->input->get("qty"),
-            "sub_total" => $this->input->get("sub_total"),
-            "harga_saat_transaksi" => $this->input->get("harga_saat_transaksi"),
+            "transaksi_id" => $this->input->post("transaksi_id"),
+            "produk_id" => $this->input->post("produk_id"),
+            "qty" => $this->input->post("qty"),
+            "sub_total" => $this->input->post("sub_total"),
+            "harga_saat_transaksi" => $this->input->post("harga_saat_transaksi"),
         );
 
-        $id = $this->input->get("id");
+        $id = $this->input->post("id");
 
         $result = $this->M_item_transaksi->updateItemTransaction($data, $id);
         $data_json = array(
@@ -204,11 +204,11 @@ class Item_Transaction extends CI_Controller
         $this->cekToken();
         $validation_message = [];
 
-        if ($this->input->get("id") == "") {
+        if ($this->input->post("id") == "") {
             array_push($validation_message, "ID Item Transaction cannot be empty");
         }
 
-        if ($this->input->get("id") != "" && !$this->M_item_transaksi->cekItemTransactionExist($this->input->get("id"))) {
+        if ($this->input->post("id") != "" && !$this->M_item_transaksi->cekItemTransactionExist($this->input->post("id"))) {
             array_push($validation_message, "ID Item Transaction not found");
         }
 
@@ -223,7 +223,7 @@ class Item_Transaction extends CI_Controller
             exit();
         }
 
-        $this->db->delete("item_transaksi", array("id" => $this->input->get("id")));
+        $this->db->delete("item_transaksi", array("id" => $this->input->post("id")));
         $data_json = array(
             'success' => true,
             "message" => "Delete Data Success",
@@ -238,11 +238,11 @@ class Item_Transaction extends CI_Controller
         $this->cekToken();
         $validation_message = [];
 
-        if ($this->input->get("transaksi_id") == "") {
+        if ($this->input->post("transaksi_id") == "") {
             array_push($validation_message, "Transaksi Id cannot be empty");
         }
 
-        if ($this->input->get("transaksi_id") != "" && !$this->M_item_transaksi->cekItemTransactionExist($this->input->get("transaksi_id"))) {
+        if ($this->input->post("transaksi_id") != "" && !$this->M_item_transaksi->cekItemTransactionExist($this->input->post("transaksi_id"))) {
             array_push($validation_message, "Transaksi Id not found");
         }
 
@@ -257,7 +257,7 @@ class Item_Transaction extends CI_Controller
             exit();
         }
 
-        $this->db->delete("item_transaksi", array("transaksi_id" => $this->input->get("transaksi_id")));
+        $this->db->delete("item_transaksi", array("transaksi_id" => $this->input->post("transaksi_id")));
         $data_json = array(
             'success' => true,
             "message" => "Delete Data Success",

@@ -36,31 +36,31 @@ class Product extends CI_Controller
         $this->cekToken();
         $validation_message = [];
 
-        if ($this->input->get("admin_id") == "") {
+        if ($this->input->post("admin_id") == "") {
             array_push($validation_message, "Admin Id cannot be empty");
         }
 
-        if ($this->input->get("admin_id") != "" && !$this->M_admin->cekAdminExist($this->input->get("admin_id"))) {
+        if ($this->input->post("admin_id") != "" && !$this->M_admin->cekAdminExist($this->input->post("admin_id"))) {
             array_push($validation_message, "Admin Id not found");
         }
 
-        if ($this->input->get("nama") == "") {
+        if ($this->input->post("nama") == "") {
             array_push($validation_message, "Nama cannot be empty");
         }
 
-        if ($this->input->get("harga") == "") {
+        if ($this->input->post("harga") == "") {
             array_push($validation_message, "Harga cannot be empty");
         }
 
-        if ($this->input->get("harga") != "" && !is_numeric($this->input->get("harga"))) {
+        if ($this->input->post("harga") != "" && !is_numeric($this->input->post("harga"))) {
             array_push($validation_message, "Price must be a number");
         }
 
-        if ($this->input->get("stok") == "") {
+        if ($this->input->post("stok") == "") {
             array_push($validation_message, "Stock cannot be empty");
         }
 
-        if ($this->input->get("stok") != "" && !is_numeric($this->input->get("stok"))) {
+        if ($this->input->post("stok") != "" && !is_numeric($this->input->post("stok"))) {
             array_push($validation_message, "Stock must be a number");
         }
 
@@ -76,10 +76,10 @@ class Product extends CI_Controller
             exit();
         }
         $data = array(
-            "admin_id" => $this->input->get("admin_id"),
-            "nama" => $this->input->get("nama"),
-            "harga" => $this->input->get("harga"),
-            "stok" => $this->input->get("stok"),
+            "admin_id" => $this->input->post("admin_id"),
+            "nama" => $this->input->post("nama"),
+            "harga" => $this->input->post("harga"),
+            "stok" => $this->input->post("stok"),
         );
 
         $result = $this->M_product->insertProduct($data);
@@ -100,36 +100,36 @@ class Product extends CI_Controller
         $this->cekToken();
         $validation_message = [];
 
-        if ($this->input->get("admin_id") == "") {
+        if ($this->input->post("admin_id") == "") {
             array_push($validation_message, "Admin Id cannot be empty");
         }
 
-        if ($this->input->get("admin_id") != "" && !$this->M_admin->cekAdminExist($this->input->get("admin_id"))) {
+        if ($this->input->post("admin_id") != "" && !$this->M_admin->cekAdminExist($this->input->post("admin_id"))) {
             array_push($validation_message, "Admin Id not found");
         }
 
 
-        if ($this->input->get("nama") == "") {
+        if ($this->input->post("nama") == "") {
             array_push($validation_message, "Nama cannot be empty");
         }
 
-        if ($this->input->get("id") != "" && !$this->M_product->cekProductExist($this->input->get("id"))) {
+        if ($this->input->post("id") != "" && !$this->M_product->cekProductExist($this->input->post("id"))) {
             array_push($validation_message, "Product not found");
         }
 
-        if ($this->input->get("harga") == "") {
+        if ($this->input->post("harga") == "") {
             array_push($validation_message, "Price cannot be empty");
         }
 
-        if ($this->input->get("harga") != "" && !is_numeric($this->input->get("harga"))) {
+        if ($this->input->post("harga") != "" && !is_numeric($this->input->post("harga"))) {
             array_push($validation_message, "Price must be a number");
         }
 
-        if ($this->input->get("stok") == "") {
+        if ($this->input->post("stok") == "") {
             array_push($validation_message, "Stock cannot be empty");
         }
 
-        if ($this->input->get("stok") != "" && !is_numeric($this->input->get("stok"))) {
+        if ($this->input->post("stok") != "" && !is_numeric($this->input->post("stok"))) {
             array_push($validation_message, "Stock must be a number");
         }
 
@@ -144,13 +144,13 @@ class Product extends CI_Controller
             exit();
         }
         $data = array(
-            "admin_id" => $this->input->get("admin_id"),
-            "nama" => $this->input->get("nama"),
-            "harga" => $this->input->get("harga"),
-            "stok" => $this->input->get("stok"),
+            "admin_id" => $this->input->post("admin_id"),
+            "nama" => $this->input->post("nama"),
+            "harga" => $this->input->post("harga"),
+            "stok" => $this->input->post("stok"),
         );
 
-        $id = $this->input->get("id");
+        $id = $this->input->post("id");
 
         $result = $this->M_product->updateProduct($data, $id);
         $data_json = array(
@@ -169,11 +169,11 @@ class Product extends CI_Controller
         $this->cekToken();
         $validation_message = [];
 
-        if ($this->input->get("id") == "") {
+        if ($this->input->post("id") == "") {
             array_push($validation_message, "ID Product cannot be empty");
         }
 
-        if ($this->input->get("id") != "" && !$this->M_product->cekProductExist($this->input->get("id"))) {
+        if ($this->input->post("id") != "" && !$this->M_product->cekProductExist($this->input->post("id"))) {
             array_push($validation_message, "Product not found");
         }
 
@@ -188,7 +188,7 @@ class Product extends CI_Controller
             exit();
         }
 
-        $this->db->delete("produk", array("id" => $this->input->get("id")));
+        $this->db->delete("produk", array("id" => $this->input->post("id")));
         $data_json = array(
             'success' => true,
             "message" => "Delete Data Success",

@@ -49,15 +49,15 @@ class Transaction extends CI_Controller
         $this->cekToken();
         $validation_message = [];
 
-        if ($this->input->get("admin_id") == "") {
+        if ($this->input->post("admin_id") == "") {
             array_push($validation_message, "Admin Id cannot be empty");
         }
 
-        if ($this->input->get("admin_id") != "" && !$this->M_transaction->cekTransactionExist($this->input->get("admin_id"))) {
+        if ($this->input->post("admin_id") != "" && !$this->M_transaction->cekTransactionExist($this->input->post("admin_id"))) {
             array_push($validation_message, "Admin Id not found");
         }
 
-        if ($this->input->get("total") == "") {
+        if ($this->input->post("total") == "") {
             array_push($validation_message, "Total cannot be empty");
         }
 
@@ -73,8 +73,8 @@ class Transaction extends CI_Controller
             exit();
         }
         $data = array(
-            "admin_id" => $this->input->get("admin_id"),
-            "total" => $this->input->get("total"),
+            "admin_id" => $this->input->post("admin_id"),
+            "total" => $this->input->post("total"),
             'tanggal' => date("Y-m-d H:i:s"),
         );
 
@@ -96,19 +96,19 @@ class Transaction extends CI_Controller
         $this->cekToken();
         $validation_message = [];
 
-        if ($this->input->get("admin_id") == "") {
+        if ($this->input->post("admin_id") == "") {
             array_push($validation_message, "Admin Id cannot be empty");
         }
 
-        if ($this->input->get("admin_id") != "" && !$this->M_transaction->cekAdminIdTransactionExist($this->input->get("admin_id"))) {
+        if ($this->input->post("admin_id") != "" && !$this->M_transaction->cekAdminIdTransactionExist($this->input->post("admin_id"))) {
             array_push($validation_message, "Admin Id not found");
         }
 
-        if ($this->input->get("total") == "") {
+        if ($this->input->post("total") == "") {
             array_push($validation_message, "Total cannot be empty");
         }
 
-        if ($this->input->get("id") == "") {
+        if ($this->input->post("id") == "") {
             array_push($validation_message, "Id cannot be empty");
         }
 
@@ -123,11 +123,11 @@ class Transaction extends CI_Controller
             exit();
         }
         $data = array(
-            "admin_id" => $this->input->get("admin_id"),
-            "total" => $this->input->get("total"),
+            "admin_id" => $this->input->post("admin_id"),
+            "total" => $this->input->post("total"),
         );
 
-        $id = $this->input->get("id");
+        $id = $this->input->post("id");
 
         $result = $this->M_transaction->updateTransaction($data, $id);
         $data_json = array(
@@ -146,11 +146,11 @@ class Transaction extends CI_Controller
         $this->cekToken();
         $validation_message = [];
 
-        if ($this->input->get("id") == "") {
+        if ($this->input->post("id") == "") {
             array_push($validation_message, "ID Product cannot be empty");
         }
 
-        if ($this->input->get("id") != "" && !$this->M_transaction->cekTransactionExist($this->input->get("id"))) {
+        if ($this->input->post("id") != "" && !$this->M_transaction->cekTransactionExist($this->input->post("id"))) {
             array_push($validation_message, "Transaction not found");
         }
 
@@ -165,7 +165,7 @@ class Transaction extends CI_Controller
             exit();
         }
 
-        $this->db->delete("transaksi", array("id" => $this->input->get("id")));
+        $this->db->delete("transaksi", array("id" => $this->input->post("id")));
         $data_json = array(
             'success' => true,
             "message" => "Delete Transaction Success",

@@ -38,22 +38,22 @@ class Admin extends CI_Controller
     // Create
     public function admin_post()
     {
-        $this->cekToken();
+        // $this->cekToken();
         $validation_message = [];
 
-        if ($this->input->get("email") == "") {
+        if ($this->input->post("email") == "") {
             array_push($validation_message, "Email cannot be empty");
         }
 
-        if ($this->input->get("email") != "" && !filter_var($this->input->get("email"), FILTER_VALIDATE_EMAIL)) {
+        if ($this->input->post("email") != "" && !filter_var($this->input->post("email"), FILTER_VALIDATE_EMAIL)) {
             array_push($validation_message, "Email not valid");
         }
 
-        if ($this->input->get("password") == "") {
+        if ($this->input->post("password") == "") {
             array_push($validation_message, "Password cannot be empty");
         }
 
-        if ($this->input->get("nama") == "") {
+        if ($this->input->post("nama") == "") {
             array_push($validation_message, "Nama cannot be empty");
         }
 
@@ -69,9 +69,9 @@ class Admin extends CI_Controller
             exit();
         }
         $data = array(
-            "email" => $this->input->get("email"),
-            "password" => md5($this->input->get("password")),
-            "nama" => $this->input->get("nama"),
+            "email" => $this->input->post("email"),
+            "password" => md5($this->input->post("password")),
+            "nama" => $this->input->post("nama"),
         );
 
         $result = $this->M_admin->insertAdmin($data);
@@ -92,19 +92,19 @@ class Admin extends CI_Controller
         $this->cekToken();
         $validation_message = [];
 
-        if ($this->input->get("email") == "") {
+        if ($this->input->post("email") == "") {
             array_push($validation_message, "Email cannot be empty");
         }
 
-        if ($this->input->get("email") != "" && !filter_var($this->input->get("email"), FILTER_VALIDATE_EMAIL)) {
+        if ($this->input->post("email") != "" && !filter_var($this->input->post("email"), FILTER_VALIDATE_EMAIL)) {
             array_push($validation_message, "Email not valid");
         }
 
-        if ($this->input->get("password") == "") {
+        if ($this->input->post("password") == "") {
             array_push($validation_message, "Password cannot be empty");
         }
 
-        if ($this->input->get("nama") == "") {
+        if ($this->input->post("nama") == "") {
             array_push($validation_message, "Nama cannot be empty");
         }
 
@@ -119,12 +119,12 @@ class Admin extends CI_Controller
             exit();
         }
         $data = array(
-            "email" => $this->input->get("email"),
-            "password" => md5($this->input->get("password")),
-            "nama" => $this->input->get("nama"),
+            "email" => $this->input->post("email"),
+            "password" => md5($this->input->post("password")),
+            "nama" => $this->input->post("nama"),
         );
 
-        $id = $this->input->get("id");
+        $id = $this->input->post("id");
 
         $result = $this->M_admin->updateAdmin($data, $id);
         $data_json = array(
@@ -143,11 +143,11 @@ class Admin extends CI_Controller
         $this->cekToken();
         $validation_message = [];
 
-        if ($this->input->get("id") == "") {
+        if ($this->input->post("id") == "") {
             array_push($validation_message, "ID Admin cannot be empty");
         }
 
-        $id = $this->input->get("id");
+        $id = $this->input->post("id");
         $result = $this->M_admin->deleteAdmin($id);
         if (empty($result)) {
             $data_json = array(
@@ -169,8 +169,8 @@ class Admin extends CI_Controller
     public function login_post()
     {
         $data = array(
-            "email" => $this->input->get("email"),
-            "password" => md5($this->input->get("password")),
+            "email" => $this->input->post("email"),
+            "password" => md5($this->input->post("password")),
         );
 
         $result = $this->M_admin->cekLoginAdmin($data);
